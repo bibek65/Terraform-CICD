@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "tf_backend_bucket_name" {
-  default = "lf-devops-gitops-terraform-state"
+  default = "bibek-devops-gitops-terraform-state"
 }
 
 
