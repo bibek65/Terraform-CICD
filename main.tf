@@ -48,7 +48,7 @@ resource "aws_dynamodb_table" "tf_backend_bucket_state_lock" {
     type = "S"
   }
   tags = {
-    "Name" = "DynamoDB Terraform State Lock Table"
+    "Name" = "Bibek DynamoDB Terraform State Lock Table"
   }
 }
 
