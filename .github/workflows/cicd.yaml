@@ -53,7 +53,7 @@ jobs:
         run: |
           sudo curl https://raw.githubusercontent.com/fsaintjacques/semver-tool/3.0.0/src/semver -o /usr/local/bin/semver && sudo chmod +x /usr/local/bin/semver
           semver --version
-      - name: Get version
+      - name: Get git version
         id: get-version
         run: |
           set -x
