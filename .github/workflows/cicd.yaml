@@ -1,16 +1,9 @@
 name: Infrastructure - Plan and apply
 env:
   package_name: gitops
-"on":
+on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: Environment
-        required: true
-        type: choice
-        options:
-          - dev
-          - prod
+
   pull_request:
     types:
       - synchronize
@@ -19,19 +12,6 @@ env:
       - dev
       - main
 jobs:
-  resolve-env:
-    runs-on: ubuntu-latest
-    steps:
-      - name: resolve environment
-        run: |
-          branch_ref=${{ github.base_ref }}
-          if [[ "$branch_ref" == "main" ]] || ${{ contains(github.event.inputs.environment, 'prod') }}; then
-            echo "env_name=prod" >> $GITHUB_ENV
-          else
-            echo "env_name=dev" >> $GITHUB_ENV
-          fi
-    outputs:
-      env_name: ${{ env.env_name }}
   build:
     name: Deploy and Release
     runs-on: ubuntu-latest
@@ -58,13 +38,6 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Terraform validate
         run: terraform validate
-      - name: Switch to required workspace
-        run: terraform workspace select -or-create $WORKSPACE
-        env:
-          WORKSPACE: ${{ needs.resolve-env.outputs.env_name }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Terraform plan
         if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
         run: terraform plan
