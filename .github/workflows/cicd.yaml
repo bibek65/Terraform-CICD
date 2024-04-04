@@ -15,9 +15,6 @@ jobs:
   build:
     name: Deploy and Release
     runs-on: ubuntu-latest
-    needs:
-      - resolve-env
-    environment: ${{ needs.resolve-env.outputs.env_name }}
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       TF_IN_AUTOMATION: true
