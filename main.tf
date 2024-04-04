@@ -4,10 +4,10 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "bibek-devops-gitops-terraform-state"
+    bucket         = "bibek-lf-devops-gitops-terraform-state"
     key            = "terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "terraform_state"
+    dynamodb_table = "bibek_terraform_state"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "tf_backend_bucket
 }
 
 resource "aws_dynamodb_table" "tf_backend_bucket_state_lock" {
-  name           = "terraform_state"
+  name           = "bibek_terraform_state"
   read_capacity  = 1
   write_capacity = 1
   hash_key       = "LockID"
@@ -47,10 +47,9 @@ resource "aws_dynamodb_table" "tf_backend_bucket_state_lock" {
     type = "S"
   }
   tags = {
-    "Name" = "DynamoDB Terraform State Lock Table"
+    "Name" = "Bibek DynamoDB Terraform State Lock Table"
   }
 }
-
 
 resource "aws_s3_bucket" "default" {
   bucket = var.bucket_name
@@ -58,3 +57,7 @@ resource "aws_s3_bucket" "default" {
     Name = var.bucket_name
   }
 }
+
+
+
+
