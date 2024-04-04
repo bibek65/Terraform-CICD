@@ -70,7 +70,7 @@ jobs:
           fi
           echo "new_version=$new_version" >> $GITHUB_OUTPUT
       - name: Prepare artifact
-        id: prep
+        id: prepare
         run: |
           BUILD_NUM=$(echo $GITHUB_RUN_NUMBER)
           BUILD_ID=$(echo $GITHUB_SHA | head -c7)
