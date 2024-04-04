@@ -4,7 +4,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "lf-devops-gitops-terraform-state"
+    bucket         = "bibek-lf-devops-gitops-terraform-state"
     key            = "terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "bibek_terraform_state"
@@ -38,7 +38,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "tf_backend_bucket
 }
 
 resource "aws_dynamodb_table" "tf_backend_bucket_state_lock" {
-  depends_on     = [aws_s3_bucket_object_lock_configuration.tf_backend_bucket_object_lock]
   name           = "bibek_terraform_state"
   read_capacity  = 1
   write_capacity = 1
@@ -58,6 +57,7 @@ resource "aws_s3_bucket" "default" {
     Name = var.bucket_name
   }
 }
+
 
 
 
