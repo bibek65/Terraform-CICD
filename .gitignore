@@ -1,4 +1,3 @@
-# Terraform-specific ignores
 .terraform
 terraform.tfstate*
 .terraform.lock*
